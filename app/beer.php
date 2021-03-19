@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class beer extends Model
+class Beer extends Model
 {
-    //
+    protected $fillable = ['brand', 'name', 'type', 'taste', 'color', 'alcohol', 'image'];
 }

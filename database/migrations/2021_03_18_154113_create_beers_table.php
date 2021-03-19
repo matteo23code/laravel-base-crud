@@ -21,6 +21,7 @@ class CreateBeersTable extends Migration
             $table->string('taste', 255);
             $table->string('color', 255);
             $table->smallInteger('alcohol');
+            $table->string('image', 2048);
             $table->timestamps();
         });
     }

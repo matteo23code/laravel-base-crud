@@ -1,19 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="{{asset('css/app.css') }}" type="text/css">
-</head>
-<body>
+@extends('base')
 
-    {{-- @foreach ($beers as $beer)
-        <p>{{$beer->name}}</p>
-    @endforeach
- --}}
-
+@section('content')
  <table class="table">
     <thead>
       <tr>
@@ -31,17 +18,18 @@
         @foreach ($beers as $beer)
         <tr>
             <th scope="row">{{$beer->id}}</th>
-            <td>{{$beer->brand}}</td>
+            <td><a href="{{route('beers.show', compact('beer')) }}">{{$beer->brand}}</a></td>
             <td>{{$beer->name}}</td>
             <td>{{$beer->type}}</td>
             <td>{{$beer->taste}}</td>
             <td>{{$beer->color}}</td>
             <td>{{$beer->alcohol}}</td>
-            <td><img src="{{$beer->image}}" alt=""></td>
+            <td><img src="{{$beer->image}}" style="width:80%" alt=""></td>
         </tr>
       @endforeach
 
     </tbody>
   </table>
-</body>
-</html>
+  @endsection
+
+

@@ -28,7 +28,7 @@ class BeerController extends Controller
      */
     public function create()
     {
-        //
+        return view('beers.create');
     }
 
     /**
@@ -39,7 +39,30 @@ class BeerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'brand' => 'required|max:255',
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'taste' => 'required|max:255',
+            'color' => 'required|max:255',
+            'alcohol' => 'required',
+            'image' => 'required|max:2048',
+        ]);
+
+
+        $data = $request->all();
+
+        $beer = new Beer();
+        $beer->fill($data);
+        $beer->save();
+
+        //versione lunga...
+        //$beer->brand = $data['brand'];
+        //$beer->name = $data['name'];
+        //$beer->type = $data['type'];*/
+
+        $beersShop = Beer::orderBy('id', 'desc')->first();
+        return redirect()->route('beers.show', $beersShop);
     }
 
     /**
@@ -48,9 +71,9 @@ class BeerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Beer $beer)
     {
-        $beer = Beer::find($id);
+        //$beer = Beer::find($id);
         return view('beers.show', compact('beer'));
     }
 
