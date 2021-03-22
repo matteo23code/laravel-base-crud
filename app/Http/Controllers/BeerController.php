@@ -39,13 +39,15 @@ class BeerController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validateForm($request);
+
         $request->validate([
             'brand' => 'required|max:255',
             'name' => 'required|max:255',
             'type' => 'required|max:255',
             'taste' => 'required|max:255',
             'color' => 'required|max:255',
-            'alcohol' => 'required',
+            'alcohol' => 'required|numeric|between:0,200',
             'image' => 'required|max:2048',
         ]);
 
@@ -83,9 +85,9 @@ class BeerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Beer $beer)
     {
-        //
+       return view('beers.edit', compact('beer'));
     }
 
     /**
@@ -95,9 +97,26 @@ class BeerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Beer $beer)
     {
-        //
+        $this->validateForm($request);
+
+        $data = $request->all();
+        $beer->update($data);
+        return redirect()->route('beers.show', compact('beer'));
+    }
+
+    //validate form
+    protected function validateForm(Request $request){
+        $request->validate([
+            'brand' => 'required|max:255',
+            'name' => 'required|max:255',
+            'type' => 'required|max:255',
+            'taste' => 'required|max:255',
+            'color' => 'required|max:255',
+            'alcohol' => 'required|numeric|between:0,200',
+            'image' => 'required|max:2048',
+        ]);
     }
 
     /**
@@ -106,8 +125,11 @@ class BeerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Beer $beer)
     {
-        //
+
+        $beer->delete();
+
+        return redirect()->route('beers.index');
     }
 }
